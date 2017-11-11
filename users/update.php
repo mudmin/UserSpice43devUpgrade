@@ -294,6 +294,15 @@ if(!in_array($update,$existing_updates)){
   $db->query("UPDATE pages SET title = 'Backup Files',re_auth=1 WHERE page = 'users/admin_backup.php'");
   $db->query("UPDATE pages SET title = 'Maintenance' WHERE page = 'users/maintenance.php'");
   logger(1,"System Updates","Updated existing pages.");
+
+//fix vericodes
+
+$u = $db->query("SELECT id FROM users")->results();
+foreach($u as $me){
+  $db->update('users',$me->id,['vericode'=>randomstring(15)]);
+}
+  logger(1,"System Updates","Reformatted existing vericodes");
+
 //END OF UPDATE SEQUENCE
   logger(1,"System Updates","us_ip_whitelist Table Created.");
   $pages_update = $db->query("UPDATE pages SET private = ? WHERE page = ?",array(1,"users/update.php"));
