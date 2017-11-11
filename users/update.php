@@ -29,7 +29,7 @@ if(!in_array($update,$existing_updates)){
   `logdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `logtype` varchar(25) NOT NULL,
   `lognote` text NOT NULL,
-  `added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))");
   logger(1,"System Updates","Update $update beginning deployment.");
   logger(1,"System Updates","logs Table Created.");
@@ -43,8 +43,8 @@ if(!in_array($update,$existing_updates)){
   `name` varchar(255) NOT NULL,
   `file` varchar(255) NOT NULL,
   `createdby` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))");
   logger(1,"System Updates","crons Table Created.");
 //Insert crons table data
@@ -61,7 +61,7 @@ if(!in_array($update,$existing_updates)){
   $table_crons_logs = $db->query("CREATE TABLE IF NOT EXISTS `crons_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cron_id` int(11) NOT NULL,
-  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`))");
   logger(1,"System Updates","crons_logs Table Created.");
@@ -88,8 +88,8 @@ if(!in_array($update,$existing_updates)){
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `createdby` int(11) NOT NULL,
-  `created` datetime DEFAULT CURRENT_TIMESTAMP,
-  `modified` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `created`  timestamp DEFAULT CURRENT_TIMESTAMP,
+  `modified`  timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `logs_exempt_type` (`name`))");
   logger(1,"System Updates","logs_exempt Table Created.");
@@ -163,7 +163,7 @@ if(!in_array($update,$existing_updates)){
   `message` mediumtext NOT NULL,
   `is_read` tinyint(4) NOT NULL,
   `is_archived` tinyint(1) DEFAULT '0',
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_read` datetime NOT NULL,
   `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))");
