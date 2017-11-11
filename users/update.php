@@ -316,6 +316,50 @@ foreach($u as $me){
   echo "Applied update ".$update."<br>";
   $count++;
 }
+
+$update = '3GJYaKcqUtz8';
+if(!in_array($update,$existing_updates)){
+  //Create crons table
+    $table_crons_drop = $db->query("DROP TABLE IF EXISTS `crons`");
+    $table_crons = $db->query("CREATE TABLE IF NOT EXISTS `crons` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `active` int(1) NOT NULL DEFAULT '1',
+    `sort` int(3) NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `file` varchar(255) NOT NULL,
+    `createdby` int(11) NOT NULL,
+    `created` timestamp,
+    `modified` timestamp,
+    PRIMARY KEY (`id`))");
+    logger(1,"System Updates","crons Table Created.");
+
+    //Insert crons table data
+      $fields_crons = array(
+        'active' => 0,
+        'sort' => 100,
+        'name' => "Auto-Backup",
+        'file' => "backup.php",
+        'createdby' => 1);
+      $fields_cron_insert = $db->insert("crons",$fields_crons);
+      logger(1,"System Updates","crons Data Inserted.");
+
+      $table_logs_exempt_drop = $db->query("DROP TABLE IF EXISTS `logs_exempt`");
+      $table_logs_exempt = $db->query("CREATE TABLE IF NOT EXISTS `logs_exempt` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `name` varchar(255) NOT NULL,
+      `createdby` int(11) NOT NULL,
+      `created`  timestamp,
+      `modified`  timestamp,
+      PRIMARY KEY (`id`),
+      UNIQUE KEY `logs_exempt_type` (`name`))");
+      logger(1,"System Updates","logs_exempt Table Created.");
+
+  $db->insert('updates',['migration'=>$update]);
+  echo "Applied update ".$update."<br>";
+  $count++;
+}
+
+
 if($count == 1){
 echo "Finished applying ".$count." update.<br>";
 }else{
