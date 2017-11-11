@@ -44,6 +44,14 @@ if(!function_exists('get_gravatar')) {
 	}
 }
 
+function randomstring($len){
+$string = "";
+$chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+for($i=0;$i<$len;$i++)
+$string.=substr($chars,rand(0,strlen($chars)),1);
+return $string;
+}
+
 //Check if a permission level ID exists in the DB
 if(!function_exists('permissionIdExists')) {
 	function permissionIdExists($id) {
